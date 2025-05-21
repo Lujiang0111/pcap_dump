@@ -252,7 +252,7 @@ void Dumper::WorkThreadInitState()
     }
 
     pcap_link_type_ = pcap_datalink(pcap_);
-    if ((DLT_NULL != pcap_link_type_) && (DLT_EN10MB != pcap_link_type_))
+    if ((DLT_NULL != pcap_link_type_) && (DLT_EN10MB != pcap_link_type_) && (DLT_LINUX_SLL != pcap_link_type_))
     {
         LIB_LOG(LogLevels::kError, "Device doesn't provide Ethernet headers - link type was {}", pcap_link_type_);
         work_thread_state_ret_.new_state = WorkThreadStates::kFail;
