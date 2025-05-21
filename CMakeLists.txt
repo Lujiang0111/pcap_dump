@@ -73,8 +73,8 @@ set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 
 # 系统自定义参数
 if(os_name MATCHES "windows")
-    # 兼容fmt库
-    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)  # 兼容fmt库
+    target_compile_options(${PROJECT_NAME} PRIVATE /MP)
 
     # 屏蔽特定告警
     target_compile_options(${PROJECT_NAME} PRIVATE /wd4996)
