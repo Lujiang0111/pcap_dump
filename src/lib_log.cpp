@@ -23,7 +23,7 @@ static void DefaultLogCallback(LogLevels level, const char *file_name, int file_
         return;
     }
 
-    fmt::println("[libpcap_dump]: {} {}:{} {:.{}}",
+    fmt::println("[pcap_dump]: {} {}:{} {:.{}}",
         lccl::log::LevelToString(lccl_level),
         file_name, file_line,
         content, len);

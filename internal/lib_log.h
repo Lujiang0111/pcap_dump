@@ -1,5 +1,5 @@
-﻿#ifndef LIBPCAP_DUMPER_INTERNAL_LIB_LOG_H_
-#define LIBPCAP_DUMPER_INTERNAL_LIB_LOG_H_
+﻿#ifndef PCAP_DUMP_INTERNAL_LIB_LOG_H_
+#define PCAP_DUMP_INTERNAL_LIB_LOG_H_
 
 #include "lccl/log.h"
 #include "pcap_dump.h"
@@ -19,4 +19,4 @@ PCAP_DUMP_END_NAMESPACE
 
 #define LIB_LOG(level, fmt, ...) pcapdump::LibLogFmt(level, __FILE__, __LINE__, fmt, ##__VA_ARGS__);
 
-#endif // !LIBPCAP_DUMPER_INTERNAL_LIB_LOG_H_
+#endif // !PCAP_DUMP_INTERNAL_LIB_LOG_H_

@@ -1,5 +1,5 @@
-﻿#ifndef LIBPCAP_DUMPER_INTERNAL_DUMPER_H_
-#define LIBPCAP_DUMPER_INTERNAL_DUMPER_H_
+﻿#ifndef PCAP_DUMP_INTERNAL_DUMPER_H_
+#define PCAP_DUMP_INTERNAL_DUMPER_H_
 
 #include <condition_variable>
 #include <deque>
@@ -95,4 +95,4 @@ private:
 
 PCAP_DUMP_END_NAMESPACE
 
-#endif // !LIBPCAP_DUMPER_INTERNAL_DUMPER_H_
+#endif // !PCAP_DUMP_INTERNAL_DUMPER_H_
