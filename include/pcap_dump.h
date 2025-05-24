@@ -30,7 +30,9 @@ enum class LogLevels
 };
 
 // 库日志回调
-LIBPCAP_DUMP_API void SetLogCallback(void (*cb)(LogLevels level, const char *file_name, int file_line, const char *content, size_t len));
+LIBPCAP_DUMP_API void SetLogCallback(
+    void (*cb)(void *opaque, LogLevels level, const char *file_name, int file_line, const char *content, size_t len),
+    void *opaque);
 
 class IDumper
 {
