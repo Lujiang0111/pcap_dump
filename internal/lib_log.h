@@ -17,6 +17,6 @@ inline void LibLogFmt(LogLevels level, const char *file_name, int file_line, fmt
 
 PCAP_DUMP_END_NAMESPACE
 
-#define LIB_LOG(level, fmt, ...) pcapdump::LibLogFmt(level, __FILE__, __LINE__, fmt, ##__VA_ARGS__);
+#define LIB_LOG(level, fmt, ...) pcapdump::LibLogFmt(level, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 
 #endif // !PCAP_DUMP_INTERNAL_LIB_LOG_H_
