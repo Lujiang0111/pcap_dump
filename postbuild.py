@@ -33,28 +33,12 @@ def rm_dir(dir) -> None:
         os.remove(dir)
 
 
-# 创建符号链接指向.so文件
-def create_so_link(dir) -> None:
-    if not os.path.exists(dir):
-        return
-
-    # 查找所有以.so.开头的文件
-    so_files = [
-        f
-        for f in os.listdir(dir)
-        if os.path.isfile(os.path.join(dir, f)) and ".so." in f
-    ]
-
-    # 为每个.so文件创建符号链接
-    for so_file in so_files:
-        last_so_index = so_file.rfind(".so")
-        link_name = so_file[:last_so_index] + ".so"
-
-        if not os.path.isfile(os.path.join(dir, link_name)):
-            subprocess.run(
-                "cd {} && ln -sf {} {}".format(dir, so_file, link_name),
-                shell=True,
-            )
+# 删除软链接
+def remove_symlinks(dir) -> None:
+    for filename in os.listdir(dir):
+        filepath = os.path.join(dir, filename)
+        if os.path.islink(filepath):
+            os.remove(filepath)
 
 
 class Postbuild:
@@ -96,6 +80,9 @@ class Postbuild:
             dst_path = os.path.join(dst_os_name_path, f"{self.__os_arch}_release")
         else:
             dst_path = os.path.join(dst_os_name_path, f"{self.__os_arch}")
+
+        # 删除软链接
+        remove_symlinks(self.__bin_path)
 
         # 删除目标路径
         rm_dir(dst_path)
