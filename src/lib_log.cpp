@@ -1,6 +1,6 @@
 ﻿#include "lib_log.h"
 
-PCAP_DUMP_BEGIN_NAMESPACE
+PCAP_DUMP_NAMESPACE_BEGIN
 
 static void DefaultLogCallback(void *opaque, LogLevels level, const char *file_name, int file_line, const char *content, size_t len)
 {
@@ -45,4 +45,4 @@ void LibLogContent(LogLevels level, const char *file_name, int file_line, const 
     lib_log_cb(lib_log_opaque, level, file_name, file_line, content, len);
 }
 
-PCAP_DUMP_END_NAMESPACE
+PCAP_DUMP_NAMESPACE_END

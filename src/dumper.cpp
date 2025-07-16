@@ -6,7 +6,7 @@
 #include "dumper.h"
 #include "lib_log.h"
 
-PCAP_DUMP_BEGIN_NAMESPACE
+PCAP_DUMP_NAMESPACE_BEGIN
 
 Dumper::Dumper() :
     work_thread_running_(false),
@@ -428,4 +428,4 @@ std::shared_ptr<IDumper> CreateDumper()
     return std::make_shared<Dumper>();
 }
 
-PCAP_DUMP_END_NAMESPACE
+PCAP_DUMP_NAMESPACE_END

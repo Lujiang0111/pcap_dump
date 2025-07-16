@@ -10,7 +10,7 @@
 #include "pcap.h"
 #include "pcap_dump.h"
 
-PCAP_DUMP_BEGIN_NAMESPACE
+PCAP_DUMP_NAMESPACE_BEGIN
 
 class Dumper : public IDumper
 {
@@ -93,6 +93,6 @@ private:
     int file_name_idx_;
 };
 
-PCAP_DUMP_END_NAMESPACE
+PCAP_DUMP_NAMESPACE_END
 
 #endif // !PCAP_DUMP_INTERNAL_DUMPER_H_

@@ -15,10 +15,10 @@
 #define LIBPCAP_DUMP_API
 #endif
 
-#define PCAP_DUMP_BEGIN_NAMESPACE namespace pcapdump {
-#define PCAP_DUMP_END_NAMESPACE }
+#define PCAP_DUMP_NAMESPACE_BEGIN namespace pcapdump {
+#define PCAP_DUMP_NAMESPACE_END }
 
-PCAP_DUMP_BEGIN_NAMESPACE
+PCAP_DUMP_NAMESPACE_BEGIN
 
 enum class LogLevels
 {
@@ -60,6 +60,6 @@ public:
 
 LIBPCAP_DUMP_API std::shared_ptr<IDumper> CreateDumper();
 
-PCAP_DUMP_END_NAMESPACE
+PCAP_DUMP_NAMESPACE_END
 
 #endif // !LIBPCAP_DUMP_INCLUDE_PCAP_DUMP_H_

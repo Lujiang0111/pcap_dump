@@ -4,7 +4,7 @@
 #include "lccl/log.h"
 #include "pcap_dump.h"
 
-PCAP_DUMP_BEGIN_NAMESPACE
+PCAP_DUMP_NAMESPACE_BEGIN
 
 void LibLogContent(LogLevels level, const char *file_name, int file_line, const char *content, size_t len);
 
@@ -15,7 +15,7 @@ inline void LibLogFmt(LogLevels level, const char *file_name, int file_line, fmt
     LibLogContent(level, file_name, file_line, content.c_str(), content.length());
 }
 
-PCAP_DUMP_END_NAMESPACE
+PCAP_DUMP_NAMESPACE_END
 
 #define LIB_LOG(level, fmt, ...) pcapdump::LibLogFmt(level, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 
