@@ -58,14 +58,22 @@ bool Dumper::Init()
     ::localtime_r(&curr_time, &time_tm);
 #endif
 
-    file_dir_name_ = lccl::OsPathJoin(param_->dump_dir, fmt::format("{}_{}_{}_{:04}{:02}{:02}_{:02}{:02}{:02}",
-        param_->ip, param_->port, param_->interface_name,
-        time_tm.tm_year + 1900,
-        time_tm.tm_mon + 1,
-        time_tm.tm_mday,
-        time_tm.tm_hour,
-        time_tm.tm_min,
-        time_tm.tm_sec));
+    if (param_->segment_interval > 0)
+    {
+        file_dir_name_ = lccl::OsPathJoin(param_->dump_dir, fmt::format("{}_{}_{}_{:04}{:02}{:02}_{:02}{:02}{:02}",
+            param_->ip, param_->port, param_->interface_name,
+            time_tm.tm_year + 1900,
+            time_tm.tm_mon + 1,
+            time_tm.tm_mday,
+            time_tm.tm_hour,
+            time_tm.tm_min,
+            time_tm.tm_sec));
+    }
+    else
+    {
+        file_dir_name_ = lccl::OsPathJoin(param_->dump_dir);
+    }
+
     lccl::file::CreateDir(file_dir_name_.c_str(), false);
 
     work_thread_running_ = true;
@@ -339,7 +347,8 @@ void Dumper::WorkThreadWorkingState()
 
     time_t pcap_header_time = pcap_header->ts.tv_sec;
     if (!(pcap_dumper_) ||
-        (pcap_header_time / param_->segment_interval != pcap_dumper_prev_time_ / param_->segment_interval))
+        ((param_->segment_interval > 0) &&
+            (pcap_header_time / param_->segment_interval != pcap_dumper_prev_time_ / param_->segment_interval)))
     {
         std::tm time_tm;
 #if defined(_MSC_VER)

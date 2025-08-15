@@ -43,7 +43,7 @@ public:
         kPort,              // char *, Port string or any
         kInterface,         // char *, Interface IP or Name
         kPromisc,           // bool
-        kSegmentInterval,   // int64_t
+        kSegmentInterval,   // int64_t, 0 means infinite
         kSegmentSize,       // size_t
         kDumpDir,           // char *
         kNb,
