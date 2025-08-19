@@ -169,6 +169,10 @@ bool Dumper::ParseParam()
         ? std::string(reinterpret_cast<char *>(in_params_[static_cast<size_t>(ParamNames::kDumpDir)]->data()), in_params_[static_cast<size_t>(ParamNames::kDumpDir)]->size())
         : "dump";
 
+    param_->dump_name = (in_params_[static_cast<size_t>(ParamNames::kDumpName)])
+        ? std::string(reinterpret_cast<char *>(in_params_[static_cast<size_t>(ParamNames::kDumpName)]->data()), in_params_[static_cast<size_t>(ParamNames::kDumpName)]->size())
+        : "";
+
     return true;
 }
 
@@ -357,15 +361,24 @@ void Dumper::WorkThreadWorkingState()
         ::localtime_r(&pcap_header_time, &time_tm);
 #endif
 
-        std::string file_name = lccl::OsPathJoin(file_dir_name_,
-            fmt::format("{}_{:04}{:02}{:02}_{:02}{:02}{:02}.pcap",
-                file_name_idx_,
-                time_tm.tm_year + 1900,
-                time_tm.tm_mon + 1,
-                time_tm.tm_mday,
-                time_tm.tm_hour,
-                time_tm.tm_min,
-                time_tm.tm_sec));
+        std::string file_name;
+        if ((param_->segment_interval > 0) || (param_->dump_name.empty()))
+        {
+            file_name = lccl::OsPathJoin(file_dir_name_,
+                fmt::format("{}_{:04}{:02}{:02}_{:02}{:02}{:02}.pcap",
+                    file_name_idx_,
+                    time_tm.tm_year + 1900,
+                    time_tm.tm_mon + 1,
+                    time_tm.tm_mday,
+                    time_tm.tm_hour,
+                    time_tm.tm_min,
+                    time_tm.tm_sec));
+        }
+        else
+        {
+            file_name = lccl::OsPathJoin(param_->dump_name);
+        }
+
         ++file_name_idx_;
 
         if (pcap_dumper_)

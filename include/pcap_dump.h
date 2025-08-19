@@ -39,13 +39,14 @@ class IDumper
 public:
     enum class ParamNames
     {
-        kIp = 0,            // char *
-        kPort,              // char *, Port string or any
-        kInterface,         // char *, Interface IP or Name
-        kPromisc,           // bool
-        kSegmentInterval,   // int64_t, 0 means infinite
-        kSegmentSize,       // size_t
-        kDumpDir,           // char *
+        kIp = 0,            // char *   IP字符串
+        kPort,              // char *   端口字符串
+        kInterface,         // char *   网卡IP或名称
+        kPromisc,           // bool     是否开启混杂
+        kSegmentInterval,   // int64_t  0代表不分片
+        kSegmentSize,       // size_t   切片循环个数
+        kDumpDir,           // char *   录制文件夹
+        kDumpName,          // char *   切片名称，仅在不分片情况下生效
         kNb,
     };
 

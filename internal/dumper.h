@@ -25,6 +25,7 @@ public:
         int64_t segment_interval = 30;
         size_t segment_size = 10;
         std::string dump_dir;
+        std::string dump_name;
     };
 
 public:
