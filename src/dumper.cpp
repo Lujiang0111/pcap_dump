@@ -395,7 +395,7 @@ void Dumper::WorkThreadWorkingState()
         }
 
         file_names_.push_back(file_name);
-        if (file_names_.size() > param_->segment_size)
+        if ((param_->segment_size > 0) && (file_names_.size() > param_->segment_size))
         {
             const std::string &del_file_name = file_names_.front();
             LIB_LOG(LogLevels::kInfo, "New pcap file={}, del file={}",

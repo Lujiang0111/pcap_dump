@@ -44,7 +44,7 @@ public:
         kInterface,         // char *   网卡IP或名称
         kPromisc,           // bool     是否开启混杂
         kSegmentInterval,   // int64_t  0代表不分片
-        kSegmentSize,       // size_t   切片循环个数
+        kSegmentSize,       // size_t   切片循环个数, 0代表无限
         kDumpDir,           // char *   录制文件夹
         kDumpName,          // char *   切片名称，仅在不分片情况下生效
         kNb,
