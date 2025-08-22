@@ -44,10 +44,14 @@ if(WIN32)
 else()
     if(EXISTS "/etc/os-release")
         file(READ "/etc/os-release" os_release_content)
-        string(REGEX MATCH "ID=\"([^\"]*)\"" _ ${os_release_content})
-        set(os_name ${CMAKE_MATCH_1})
-        string(REGEX MATCH "VERSION_ID=\"([^\"]*)\"" _ ${os_release_content})
-        set(os_version ${CMAKE_MATCH_1})
+        string(REGEX REPLACE "\n" ";" os_release_lines "${os_release_content}")
+        foreach(line IN LISTS os_release_lines)
+            if(line MATCHES "^ID=\"?([^\"]+)\"?")
+                set(os_name "${CMAKE_MATCH_1}")
+            elseif(line MATCHES "^VERSION_ID=\"?([^\"]+)\"?")
+                set(os_version "${CMAKE_MATCH_1}")
+            endif()
+        endforeach()
     endif()
 endif()
 
@@ -73,7 +77,7 @@ set(postbuild_lib_base_path "${CMAKE_CURRENT_SOURCE_DIR}/../../../version/lib")
 
 # 系统自定义参数
 if(os_name MATCHES "windows")
-    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)  # 兼容fmt库
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8) # 兼容fmt库
     target_compile_options(${PROJECT_NAME} PRIVATE /MP)
 
     # 屏蔽特定告警
