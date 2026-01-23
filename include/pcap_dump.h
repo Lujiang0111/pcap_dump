@@ -43,6 +43,7 @@ public:
         kPort,              // char *   端口字符串
         kInterface,         // char *   网卡IP或名称
         kPromisc,           // bool     是否开启混杂
+        kIoFlag,            // int      抓取输入或输出，可以用|多选，1：只抓输入，2：只抓输出
         kSegmentInterval,   // int64_t  0代表不分片
         kSegmentSize,       // size_t   切片循环个数, 0代表无限
         kDumpDir,           // char *   录制文件夹

@@ -17,11 +17,18 @@ class Dumper : public IDumper
 public:
     struct Param
     {
+        enum IoFlags
+        {
+            kIn = 1 << 0,
+            kOut = 1 << 1,
+        };
+
         std::string ip;
         std::string port;
         std::string interface_name;
         std::string interface_device;
         bool promisc = false;
+        int io_flag;
         int64_t segment_interval = 30;
         size_t segment_size = 10;
         std::string dump_dir;

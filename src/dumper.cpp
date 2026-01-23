@@ -143,6 +143,7 @@ bool Dumper::ParseParam()
     param_->interface_name = (in_params_[static_cast<size_t>(ParamNames::kInterface)])
         ? std::string(reinterpret_cast<char *>(in_params_[static_cast<size_t>(ParamNames::kInterface)]->data()), in_params_[static_cast<size_t>(ParamNames::kInterface)]->size())
         : "any";
+
     lccl::skt::AddrTypes addr_type = lccl::skt::GetIpType(param_->interface_name.c_str());
     switch (addr_type)
     {
@@ -158,6 +159,9 @@ bool Dumper::ParseParam()
     param_->promisc = (in_params_[static_cast<size_t>(ParamNames::kPromisc)])
         ? *reinterpret_cast<bool *>(in_params_[static_cast<size_t>(ParamNames::kPromisc)]->data())
         : false;
+    param_->io_flag = (in_params_[static_cast<int>(ParamNames::kIoFlag)])
+        ? *reinterpret_cast<int *>(in_params_[static_cast<int>(ParamNames::kIoFlag)]->data())
+        : Param::IoFlags::kIn;
     param_->segment_interval = (in_params_[static_cast<size_t>(ParamNames::kSegmentInterval)])
         ? *reinterpret_cast<int64_t *>(in_params_[static_cast<size_t>(ParamNames::kSegmentInterval)]->data())
         : 30;
@@ -420,25 +424,47 @@ std::string Dumper::GetFilter() const
     std::string filter_str;
     if ("any" != param_->ip)
     {
-        if (filter_str.length() > 0)
+        if ((filter_str.length() > 0) && (0 != param_->io_flag))
         {
-            filter_str += fmt::format(" and dst host {}", param_->ip);
+            filter_str += fmt::format(" and ");
         }
-        else
+
+        switch (param_->io_flag)
         {
+        case Param::IoFlags::kIn:
+            filter_str += fmt::format("src host {}", param_->ip);
+            break;
+        case Param::IoFlags::kOut:
             filter_str += fmt::format("dst host {}", param_->ip);
+            break;
+        case Param::IoFlags::kIn | Param::IoFlags::kOut:
+            filter_str += fmt::format("host {}", param_->ip);
+            break;
+        default:
+            break;
         }
     }
 
     if ("any" != param_->port)
     {
-        if (filter_str.length() > 0)
+        if ((filter_str.length() > 0) && (0 != param_->io_flag))
         {
-            filter_str += fmt::format(" and dst port {}", param_->port);
+            filter_str += fmt::format(" and ");
         }
-        else
+
+        switch (param_->io_flag)
         {
+        case Param::IoFlags::kIn:
+            filter_str += fmt::format("src port {}", param_->port);
+            break;
+        case Param::IoFlags::kOut:
             filter_str += fmt::format("dst port {}", param_->port);
+            break;
+        case Param::IoFlags::kIn | Param::IoFlags::kOut:
+            filter_str += fmt::format("port {}", param_->port);
+            break;
+        default:
+            break;
         }
     }
 
