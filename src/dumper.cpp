@@ -432,10 +432,10 @@ std::string Dumper::GetFilter() const
         switch (param_->io_flag)
         {
         case Param::IoFlags::kIn:
-            filter_str += fmt::format("src host {}", param_->ip);
+            filter_str += fmt::format("dst host {}", param_->ip);
             break;
         case Param::IoFlags::kOut:
-            filter_str += fmt::format("dst host {}", param_->ip);
+            filter_str += fmt::format("src host {}", param_->ip);
             break;
         case Param::IoFlags::kIn | Param::IoFlags::kOut:
             filter_str += fmt::format("host {}", param_->ip);
@@ -455,10 +455,10 @@ std::string Dumper::GetFilter() const
         switch (param_->io_flag)
         {
         case Param::IoFlags::kIn:
-            filter_str += fmt::format("src port {}", param_->port);
+            filter_str += fmt::format("dst port {}", param_->port);
             break;
         case Param::IoFlags::kOut:
-            filter_str += fmt::format("dst port {}", param_->port);
+            filter_str += fmt::format("src port {}", param_->port);
             break;
         case Param::IoFlags::kIn | Param::IoFlags::kOut:
             filter_str += fmt::format("port {}", param_->port);
