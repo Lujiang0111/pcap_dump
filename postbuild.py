@@ -1,6 +1,5 @@
 import os
 import shutil
-import subprocess
 import sys
 
 
@@ -46,9 +45,9 @@ class Postbuild:
     __os_version = None
     __os_arch = None
     __build_type = "Debug"
-    __include_path = None
-    __bin_path = None
-    __dst_base_path = None
+    __include_dir = None
+    __bin_dir = None
+    __dst_base_dir = None
     __project_name = None
     __project_version = None
 
@@ -62,34 +61,34 @@ class Postbuild:
         self.__os_version = args[2]
         self.__os_arch = args[3]
         self.__build_type = args[4]
-        self.__include_path = os.path.join(args[5], "include")
-        self.__bin_path = os.path.join(args[6], "bin")
-        self.__dst_base_path = args[7]
+        self.__include_dir = os.path.join(args[5], "include")
+        self.__bin_dir = os.path.join(args[6], "bin")
+        self.__dst_base_dir = args[7]
         self.__project_name = args[8]
         self.__project_version = args[9]
 
-        dst_os_name_path = os.path.join(
-            self.__dst_base_path,
+        dst_os_name_dir = os.path.join(
+            self.__dst_base_dir,
             self.__project_name,
             f"v{self.__project_version}",
             self.__os_name,
         )
 
-        dst_path = None
+        dst_dir = None
         if self.__build_type == "Release":
-            dst_path = os.path.join(dst_os_name_path, f"{self.__os_arch}_release")
+            dst_dir = os.path.join(dst_os_name_dir, f"{self.__os_arch}_release")
         else:
-            dst_path = os.path.join(dst_os_name_path, f"{self.__os_arch}")
+            dst_dir = os.path.join(dst_os_name_dir, f"{self.__os_arch}")
 
         # 删除软链接
-        remove_symlinks(self.__bin_path)
+        remove_symlinks(self.__bin_dir)
 
         # 删除目标路径
-        rm_dir(dst_path)
+        rm_dir(dst_dir)
 
         # 拷贝include和bin目录
-        copy_dir(self.__include_path, os.path.join(dst_path, "include"))
-        copy_dir(self.__bin_path, os.path.join(dst_path, "lib"))
+        copy_dir(self.__include_dir, os.path.join(dst_dir, "include"))
+        copy_dir(self.__bin_dir, os.path.join(dst_dir, "lib"))
 
 
 # 程序入口
